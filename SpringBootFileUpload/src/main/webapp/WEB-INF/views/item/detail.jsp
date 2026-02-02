@@ -146,8 +146,8 @@ body {
 
 			<div class="card-footer bg-light p-4">
 				<div class="d-flex justify-content-between align-items-center">
-					<a href="/item/itemList" class="btn btn-outline-secondary px-4">
-						<i class="bi bi-list-ul me-1"></i> 상품 목록
+					<a href="/item/list" class="btn btn-outline-secondary px-4"> <i
+						class="bi bi-list-ul me-1"></i> 상품 목록
 					</a>
 
 					<div class="d-flex gap-2">

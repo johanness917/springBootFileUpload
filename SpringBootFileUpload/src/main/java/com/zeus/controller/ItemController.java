@@ -124,6 +124,44 @@ public class ItemController {
 		return entity;
 	}
 
+	@GetMapping("/updateForm")
+	public String itemUpdateForm(Item i, Model model) throws Exception {
+		log.info("updateForm item= " + i.toString());
+		Item item = itemService.read(i);
+		model.addAttribute("item", item);
+		return "item/updateForm";
+	}
+
+	@PostMapping("/update")
+	public String itemUpdate(Item item, Model model) throws Exception {
+		log.info("update item= " + item.toString());
+		MultipartFile file = item.getPicture();
+		String oldUrl = null;
+		if (file != null && file.getSize() > 0) {
+			// 기존의 있는 외부저장소에 있는 파일을 삭제
+			Item oldItem = itemService.read(item);
+			oldUrl = oldItem.getUrl();
+
+			// 새로운 업로드 이미지 파일
+			log.info("originalName: " + file.getOriginalFilename());
+			log.info("size: " + file.getSize());
+			log.info("contentType: " + file.getContentType());
+			String createdFileName = uploadFile(file.getOriginalFilename(), file.getBytes());
+			item.setUrl(createdFileName);
+		}
+		int count = itemService.update(item);
+
+		if (count > 0) {
+			// 테이블에 수정내용이 완료되고 그리고 나서 이번 이미지 파일을 삭제한다.
+			if (oldUrl != null)
+				deleteFile(oldUrl);
+			model.addAttribute("message", "%s 상품 수정 성공".formatted(item.getName()));
+			return "item/success";
+		}
+		model.addAttribute("message", "%s 상품 수정 실패".formatted(item.getName()));
+		return "item/failed";
+	}
+
 	private MediaType getMediaType(String form) {
 		String formatName = form.toUpperCase();
 		if (formatName != null) {
@@ -152,5 +190,15 @@ public class ItemController {
 		// D:/upload/uid3b2688fb-f4ab-4138-aeef-2cff52052636_파일이름.jpg 복사진행
 		FileCopyUtils.copy(fileData, target);
 		return createdFileName;
+	}
+
+// 외부저장소 자료업로드 파일명생성후 저장
+// c:/upload/"../window/system.ini" 디렉토리 탈출공격(path tarversal)
+	private boolean deleteFile(String fileName) throws Exception {
+		if (fileName.contains("..")) {
+			throw new IllegalArgumentException("잘못된 경로 입니다.");
+		}
+		File file = new File(uploadPath, fileName);
+		return (file.exists() == true) ? (file.delete()) : (false);
 	}
 }
