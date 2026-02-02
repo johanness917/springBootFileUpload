@@ -92,7 +92,7 @@ body {
 					<hr class="my-4">
 
 					<div class="d-flex justify-content-end gap-2">
-						<a href="/item/itemList"><button type="button"
+						<a href="/item/list"><button type="button"
 								class="btn btn-outline-secondary">상품이미지리스트</button></a>
 						<button type="submit" class="btn btn-primary btn-submit">
 							</i> 상품등록
