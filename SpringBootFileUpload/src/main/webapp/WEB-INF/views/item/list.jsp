@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>회원 리스트 | Simple Board</title>
+<title>상품 리스트 | Simple Board</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -157,11 +157,11 @@ body {
 				<div class="footer-info">
 					<i class="bi bi-cpu me-1"></i> SYSTEM: CONNECTED TO DATABASE
 				</div>
-				<div class="mt-3">
-					<a href="/member/memberList"
-						class="btn btn-outline-secondary btn-sm"> <i
-						class="bi bi-arrow-clockwise"></i> 새로고침
-					</a>
+				<div class="mt-3 mb-3 me-3">
+					<button type="button" onclick="window.location.reload(true);"
+						class="btn btn-outline-primary btn-sm btn-custom">
+						<i class="bi bi-arrow-repeat me-1"></i> 새로고침
+					</button>
 				</div>
 			</div>
 		</div>

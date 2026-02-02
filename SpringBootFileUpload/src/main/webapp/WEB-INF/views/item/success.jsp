@@ -92,7 +92,7 @@ body {
 					<i class="bi bi-check-lg"></i>
 				</div>
 
-				<h2 class="msg-title mb-3">게시글 등록 성공</h2>
+				<h2 class="msg-title mb-3">상품 등록 성공</h2>
 				<p class="msg-desc mb-4">
 				<h1>"${message}"</h1>
 				</p>

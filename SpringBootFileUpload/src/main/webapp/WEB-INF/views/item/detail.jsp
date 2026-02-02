@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>회원 상세 정보 | Simple Board</title>
+<title>상품 상세 정보 | Simple Board</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -94,92 +94,70 @@ body {
 </style>
 </head>
 <body>
-
-	<div class="container detail-container">
-		<div class="card">
-			<div class="card-header d-flex align-items-center">
-				<i class="bi bi-person-vcard me-2 fs-3"></i>
-				<h4 class="mb-0">회원 상세 정보</h4>
+	<div class="container detail-container mt-5">
+		<div class="card shadow-sm">
+			<div class="card-header d-flex align-items-center bg-white py-3">
+				<i class="bi bi-box-seam me-2 fs-3 text-primary"></i>
+				<h4 class="mb-0">상품 상세 정보</h4>
 			</div>
 
 			<div class="card-body p-4 p-md-5">
 				<div class="row">
-					<div class="col-md-6">
-						<div class="info-label">
-							<i class="bi bi-hash"></i> 회원번호
-						</div>
-						<div class="info-value">
-							<c:out value="${member.no}" default="-" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="info-label">
-							<i class="bi bi-calendar3"></i> 등록일시
-						</div>
-						<div class="info-value">
-							<fmt:formatDate value="${member.regDate}"
-								pattern="yyyy.MM.dd HH:mm:ss" />
+					<div class="col-md-5 mb-4 mb-md-0 text-center">
+						<div class="img-thumbnail p-2">
+							<img alt="상품이미지 ${item.name}" src="/item/display?id=${item.id}"
+								class="img-fluid"
+								style="max-height: 400px; object-fit: contain;">
 						</div>
 					</div>
-					<div class="col-12">
-						<div class="info-label">
-							<i class="bi bi-person-badge"></i> 아이디
-						</div>
-						<div class="info-value">
-							<strong><c:out value="${member.id}" /></strong>
-						</div>
-					</div>
-					<div class="col-12">
-						<div class="info-label">
-							<i class="bi bi-info-circle"></i> 이름
-						</div>
-						<div class="info-value">
-							<c:out value="${member.name}" />
-						</div>
-					</div>
-				</div>
 
-				<div class="auth-box mt-3">
-					<h6 class="fw-bold mb-3">
-						<i class="bi bi-shield-lock me-1"></i> 부여된 권한
-					</h6>
-					<div class="d-flex flex-wrap gap-2">
-						<c:choose>
-							<c:when test="${not empty member.authList}">
-								<c:forEach var="authItem" items="${member.authList}">
-									<c:if test="${not empty authItem.auth}">
-										<span class="badge-auth"> <i
-											class="bi bi-shield-check me-1"></i> <c:choose>
-												<c:when test="${authItem.auth eq 'ROLE_ADMIN'}">관리자</c:when>
-												<c:when test="${authItem.auth eq 'ROLE_MEMBER'}">회원</c:when>
-												<c:when test="${authItem.auth eq 'ROLE_USER'}">사용자</c:when>
-												<c:otherwise>${authItem.auth}</c:otherwise>
-											</c:choose>
-										</span>
-									</c:if>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<span class="text-muted">부여된 권한이 없습니다.</span>
-							</c:otherwise>
-						</c:choose>
+					<div class="col-md-7">
+						<div class="mb-3">
+							<div class="info-label text-muted small">
+								<i class="bi bi-hash"></i> 상품 번호
+							</div>
+							<div class="info-value fs-5">
+								<c:out value="${item.id}" default="-" />
+							</div>
+						</div>
+
+						<div class="mb-3">
+							<div class="info-label text-muted small">
+								<i class="bi bi-tag"></i> 상품명
+							</div>
+							<div class="info-value fs-4">
+								<strong><c:out value="${item.name}" /></strong>
+							</div>
+						</div>
+
+						<div class="mb-4">
+							<div class="info-label text-muted small">
+								<i class="bi bi-currency-dollar"></i> 판매 가격
+							</div>
+							<div class="info-value fs-4 text-primary fw-bold">
+								<fmt:formatNumber value="${item.price}" type="currency"
+									currencySymbol="₩" />
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
 
 			<div class="card-footer bg-light p-4">
 				<div class="d-flex justify-content-between align-items-center">
-					<a href="/member/memberList" class="btn btn-outline-secondary">
-						<i class="bi bi-list-ul me-1"></i> 목록으로
+					<a href="/item/itemList" class="btn btn-outline-secondary px-4">
+						<i class="bi bi-list-ul me-1"></i> 상품 목록
 					</a>
+
 					<div class="d-flex gap-2">
-						<a href="/member/updateForm?no=${member.no}"
-							class="btn btn-submit"> <i class="bi bi-pencil-square me-1"></i>
-							수정
-						</a> <a href="/member/delete?no=${member.no}"
-							class="btn btn-outline-danger"
-							onclick="return confirm('이 회원 데이터를 삭제하시겠습니까?')"> <i
-							class="bi bi-trash3-fill me-1"></i> 삭제
+						<a href="/item/updateForm?id=${item.id}"
+							class="btn btn-primary px-4"> <i
+							class="bi bi-pencil-square me-1"></i> 상품 수정
+						</a> <a href="/item/delete?id=${item.id}"
+							class="btn btn-outline-danger px-4"
+							onclick="return confirm('정말로 이 상품을 삭제하시겠습니까?\n삭제 후에는 복구할 수 없습니다.')">
+							<i class="bi bi-trash3-fill me-1"></i> 삭제
 						</a>
 					</div>
 				</div>
@@ -187,7 +165,10 @@ body {
 		</div>
 	</div>
 
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
