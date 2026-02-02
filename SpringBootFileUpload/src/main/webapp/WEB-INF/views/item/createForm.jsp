@@ -60,7 +60,7 @@ body {
 				</h4>
 			</div>
 			<div class="card-body p-4">
-				<form action="/item/createForm" method="post" enctype="multipart/form-data">
+				<form action="/item/create" method="post" enctype="multipart/form-data">
 
 					<div class="mb-4">
 						<label for="name" class="form-label">상품이름</label> <input type="text"

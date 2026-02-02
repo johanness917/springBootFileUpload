@@ -102,25 +102,14 @@ body {
 			<div
 				class="card-header d-flex justify-content-between align-items-center">
 				<h4 class="mb-0">
-					<i class="bi bi-people-fill me-2"></i>회원 리스트
+					<i class="bi bi-people-fill me-2"></i> 상품 리스트
 				</h4>
 				<div class="btn-group-top">
-					<a href="/member/insertForm"
+					<a href="/item/createForm"
 						class="btn btn-light btn-sm btn-custom text-primary"> <i
-						class="bi bi-person-plus-fill me-1"></i>회원가입
+						class="bi bi-person-plus-fill me-1"></i>상품등록
 					</a>
 				</div>
-			</div>
-
-			<div class="search-container">
-				<form action="/member/search" method="get" class="search-form">
-					<select name="searchType" class="search-select">
-						<option value="id">ID</option>
-						<option value="name">NAME</option>
-					</select> <input type="text" name="keyword" class="search-input"
-						placeholder="Search mission...">
-					<button type="submit" class="btn-search">SEARCH</button>
-				</form>
 			</div>
 
 			<div class="card-body p-0">
@@ -128,34 +117,34 @@ body {
 					<table class="table table-hover text-center">
 						<thead>
 							<tr>
-								<th style="width: 10%">NO</th>
-								<th style="width: 20%">아이디</th>
-								<th style="width: 20%">비밀번호</th>
-								<th style="width: 20%">이름</th>
-								<th style="width: 30%">가입일</th>
+								<th style="width: 10%">ID</th>
+								<th style="width: 20%">NAME</th>
+								<th style="width: 20%">PRICE</th>
+								<th style="width: 50%">URL</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:choose>
-								<c:when test="${not empty memberList}">
-									<c:forEach var="member" items="${memberList}">
+								<c:when test="${not empty itemList}">
+									<c:forEach var="item" items="${itemList}">
 										<tr>
-											<td><span class="badge bg-light text-dark border">${member.no}</span></td>
-											<td><a href="/member/detail?no=${member.no}"
-												class="id-link"> ${member.id} </a></td>
-											<td><code class="text-muted">********</code></td>
-											<td><strong>${member.name}</strong></td>
-											<td><span class="text-muted"> <fmt:formatDate
-														value="${member.regDate}" pattern="yyyy-MM-dd" />
-											</span></td>
+											<td><span class="badge bg-light text-dark border">${item.id}</span></td>
+
+											<td><a href="/item/detail?id=${item.id}" class="id-link">
+													${item.name} </a></td>
+
+											<td><strong><fmt:formatNumber
+														value="${item.price}" pattern="#,###" /></strong>원</td>
+
+											<td><span class="text-muted">${item.url}</span></td>
 										</tr>
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
 									<tr>
-										<td colspan="5" class="py-5 text-muted"><i
+										<td colspan="4" class="py-5 text-muted"><i
 											class="bi bi-exclamation-circle d-block mb-2"
-											style="font-size: 2rem;"></i> 등록된 회원이 없습니다.</td>
+											style="font-size: 2rem;"></i> 등록된 상품이 없습니다.</td>
 									</tr>
 								</c:otherwise>
 							</c:choose>
@@ -163,22 +152,21 @@ body {
 					</table>
 				</div>
 			</div>
+
+			<div class="d-flex justify-content-between align-items-center px-2">
+				<div class="footer-info">
+					<i class="bi bi-cpu me-1"></i> SYSTEM: CONNECTED TO DATABASE
+				</div>
+				<div class="mt-3">
+					<a href="/member/memberList"
+						class="btn btn-outline-secondary btn-sm"> <i
+						class="bi bi-arrow-clockwise"></i> 새로고침
+					</a>
+				</div>
+			</div>
 		</div>
 
-		<div class="d-flex justify-content-between align-items-center px-2">
-			<div class="footer-info">
-				<i class="bi bi-cpu me-1"></i> SYSTEM: CONNECTED TO DATABASE
-			</div>
-			<div class="mt-3">
-				<a href="/member/memberList"
-					class="btn btn-outline-secondary btn-sm"> <i
-					class="bi bi-arrow-clockwise"></i> 새로고침
-				</a>
-			</div>
-		</div>
-	</div>
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

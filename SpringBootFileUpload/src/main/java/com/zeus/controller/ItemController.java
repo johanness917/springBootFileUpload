@@ -1,7 +1,10 @@
 package com.zeus.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -56,11 +59,27 @@ public class ItemController {
 		int count = itemService.create(item);
 
 		if (count > 0) {
-			model.addAttribute("messege", "%s 상품등록이 성공".formatted(file.getOriginalFilename()));
+			model.addAttribute("message", "%s 상품등록이 성공".formatted(file.getOriginalFilename()));
 			return "item/success";
 		}
-		model.addAttribute("messege", "%s 상품등록이 실패".formatted(file.getOriginalFilename()));
+		model.addAttribute("message", "%s 상품등록이 실패".formatted(file.getOriginalFilename()));
 		return "item/failed";
+	}
+
+	@GetMapping("/list")
+	public String itemList(Model model) throws Exception {
+		log.info("/itemList");
+		List<Item> itemList = itemService.list();
+		model.addAttribute("itemList", itemList);
+		return "item/list";
+	}
+	
+	@GetMapping("/detail")
+	public String itemDetaiel(Item item) throws Exception {
+		log.info("/detail");
+		List<Item> itemList = itemService.list();
+		model.addAttribute("itemList", itemList);
+		return "item/list";
 	}
 
 	private String uploadFile(String originalName, byte[] fileData) throws Exception {
