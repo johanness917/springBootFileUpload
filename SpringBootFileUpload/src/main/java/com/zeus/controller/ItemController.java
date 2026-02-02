@@ -162,6 +162,23 @@ public class ItemController {
 		return "item/failed";
 	}
 
+	@GetMapping("/delete")
+	public String itemDelete(Item item, Model model) throws Exception {
+		log.info("/delete= item" + item.toString());
+		String url = itemService.getPicture(item);
+		int count = itemService.delete(item);
+
+		if (count > 0) {
+			// 테이블에 수정내용이 완료되고 그리고 나서 이번 이미지 파일을 삭제한다.
+			if (url != null)
+				deleteFile(url);
+			model.addAttribute("message", "%d 상품 삭제 성공".formatted(item.getId()));
+			return "item/success";
+		}
+		model.addAttribute("message", "%d 상품 삭제 실패".formatted(item.getId()));
+		return "item/failed";
+	}
+
 	private MediaType getMediaType(String form) {
 		String formatName = form.toUpperCase();
 		if (formatName != null) {
